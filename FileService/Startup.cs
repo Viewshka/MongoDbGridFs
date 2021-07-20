@@ -23,7 +23,6 @@ namespace FileService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
             services.Configure<MongoDbOptions>(Configuration.GetSection("MongoDb"));
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -38,6 +37,8 @@ namespace FileService
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            
+            services.AddRazorPages();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,7 +51,8 @@ namespace FileService
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
+            
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
