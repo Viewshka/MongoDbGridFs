@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using FileService.Options.MongoDb;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ namespace FileService
         {
             services.Configure<MongoDbOptions>(Configuration.GetSection("MongoDb"));
 
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
