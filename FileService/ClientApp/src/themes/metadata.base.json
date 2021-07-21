@@ -1,0 +1,8 @@
+{
+  "items": [ ],
+  "baseTheme": "generic.softblue",
+  "assetsBasePath": "../../../node_modules/devextreme/dist/css/",
+  "outputColorScheme": "custom-scheme",
+  "makeSwatch": false,
+  "widgets": []
+}
