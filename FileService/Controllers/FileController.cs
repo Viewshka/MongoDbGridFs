@@ -2,6 +2,7 @@
 using FileService.Feature.File.Commands.DeleteFile;
 using FileService.Feature.File.Commands.DownloadFile;
 using FileService.Feature.File.Commands.UploadFile;
+using FileService.Feature.File.Queries.GetAllFilesInfo;
 using FileService.Feature.File.Queries.GetFileInfo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,7 @@ namespace FileService.Controllers
     {
         private readonly IMediator _mediator;
 
-        public FileController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
+        public FileController(IMediator mediator) => _mediator = mediator;
 
         /// <summary>
         ///     Получить информацию о файле
@@ -29,6 +26,22 @@ namespace FileService.Controllers
         public async Task<IActionResult> GetFileInfo(string id)
         {
             return Ok(await _mediator.Send(new GetFileInfoQuery {Id = id}));
+        }
+
+        /// <summary>
+        /// Получить информацию о всех файлах
+        /// </summary>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAsync(int skip = 0, int take = 50)
+        {
+            return Ok(await _mediator.Send(new GetAllFilesInfoQuery
+            {
+                Skip = skip,
+                Take = take
+            }));
         }
 
         /// <summary>

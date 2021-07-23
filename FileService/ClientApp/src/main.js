@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from "./router";
 import store from './store/main';
 import axios from 'axios';
+import enums from './plugins/enums_plugin'
 
 import 'devextreme/dist/css/dx.common.css';
 import './themes/generated/theme.base.css';
@@ -34,7 +35,7 @@ config({
  * Инициализация Vue приложения.
  */
 window.Vue = Vue;
-
+Vue.use(enums)
 new Vue({
   router,
   store,

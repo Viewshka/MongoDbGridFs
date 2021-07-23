@@ -66,10 +66,10 @@ module.exports = {
             },
             {
                 test: /\.(css|scss)$/,
-                use: ['style-loader', 'css-loader','sass-loader']
+                use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
                 use: {
                     loader: 'file-loader',
                     options: {
@@ -78,6 +78,18 @@ module.exports = {
                         publicPath: './bundles/fonts/'
                     }
                 }
+            },
+            {
+                test: /\.(svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env']
+                        }
+                    },
+                    'vue-svg-loader'
+                ]
             },
             {
                 test: /\.(png|jpg|gif)$/,

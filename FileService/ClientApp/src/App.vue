@@ -7,7 +7,7 @@
           :is-x-small="screen.isXSmall"
           :is-large="screen.isLarge"
       >
-        <div class="content">
+        <div class="content" >
           <RouterView name="content"></RouterView>
         </div>
         <template #footer>

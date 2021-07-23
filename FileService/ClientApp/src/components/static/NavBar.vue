@@ -3,7 +3,7 @@
     <DxToolbar class="header-toolbar">
       <DxItem
           v-if="title"
-          location="before"
+          location="center"
           css-class="header-title dx-toolbar-label"
       >
         <!--eslint-disable-->
