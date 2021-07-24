@@ -1,5 +1,5 @@
 <template>
-  <div id="root" class="dx-swatch-arktika-scheme">
+  <div id="root">
     <div :class="cssClasses">
       <RouterView
           name="layout"
@@ -32,17 +32,12 @@ function getScreenSizeInfo() {
   };
 }
 
-function getFavoriteTheme() {
-  return window.localStorage.getItem('favorite-theme') === 'dark'
-}
-
 export default {
   name: "App",
   data() {
     return {
       title: "Файловый сервис",
       screen: getScreenSizeInfo(),
-      isDark: getFavoriteTheme()
     };
   },
   computed: {

@@ -1,47 +1,73 @@
 <template>
   <div>
-    <DxTileView
-        height="auto"
-        direction="vertical"
-        :show-scrollbar="true"
-        :data-source="dataSource"
-        :base-item-height="250"
-        :base-item-width="180"
+    <div>
+      <DxToolbar>
+        <DxItem
+            :options="prevButtonOptions"
+            location="before"
+            widget="dxButton"
+        />
+        <DxItem
+            :options="nextButtonOptions"
+            location="before"
+            widget="dxButton"
+        />
+        <DxItem
+            :options="addButtonOptions"
+            location="after"
+            locate-in-menu="auto"
+            widget="dxButton"
+        />
+      </DxToolbar>
+    </div>
+    <div>
+      <DxTileView
+          height="auto"
+          direction="vertical"
+          :show-scrollbar="true"
+          :data-source="dataSource"
+          :base-item-height="250"
+          :base-item-width="180"
 
-        @item-click="itemClick"
-    >
-      <template #item="{ data }">
-        <div>
+          @item-click="itemClick"
+      >
+        <template #item="{ data }">
           <div>
             <div>
-              <audio v-if="data.extension === $enums.extensions.mp3"></audio>
-              <csv v-else-if="data.extension === $enums.extensions.csv"></csv>
-              <doc v-else-if="data.extension === $enums.extensions.doc"></doc>
-              <docx v-else-if="data.extension === $enums.extensions.docx"></docx>
-              <epub v-else-if="data.extension === $enums.extensions.epub"></epub>
-              <pdf v-else-if="data.extension === $enums.extensions.pdf"></pdf>
-              <ppt v-else-if="data.extension === $enums.extensions.ppt"></ppt>
-              <pptx v-else-if="data.extension === $enums.extensions.pptx"></pptx>
-              <rtf v-else-if="data.extension === $enums.extensions.rtf"></rtf>
-              <txt v-else-if="data.extension === $enums.extensions.txt"></txt>
-              <xls v-else-if="data.extension === $enums.extensions.xls"></xls>
-              <xlsx v-else-if="data.extension === $enums.extensions.xlsx"></xlsx>
-              <file v-else></file>
+              <div>
+                <audio v-if="data.extension === $enums.extensions.mp3"></audio>
+                <csv v-else-if="data.extension === $enums.extensions.csv"></csv>
+                <doc v-else-if="data.extension === $enums.extensions.doc"></doc>
+                <docx v-else-if="data.extension === $enums.extensions.docx"></docx>
+                <epub v-else-if="data.extension === $enums.extensions.epub"></epub>
+                <pdf v-else-if="data.extension === $enums.extensions.pdf"></pdf>
+                <ppt v-else-if="data.extension === $enums.extensions.ppt"></ppt>
+                <pptx v-else-if="data.extension === $enums.extensions.pptx"></pptx>
+                <rtf v-else-if="data.extension === $enums.extensions.rtf"></rtf>
+                <txt v-else-if="data.extension === $enums.extensions.txt"></txt>
+                <xls v-else-if="data.extension === $enums.extensions.xls"></xls>
+                <xlsx v-else-if="data.extension === $enums.extensions.xlsx"></xlsx>
+                <file v-else></file>
+              </div>
+              <div class="file-name text-ellipsis">{{ data.fileName }}</div>
+              <div class="file-name">({{ data.size }})</div>
             </div>
-            <div class="file-text text-ellipsis">{{ data.fileName }}</div>
-            <div class="file-text">({{ data.size }})</div>
           </div>
-        </div>
-      </template>
-    </DxTileView>
+        </template>
+      </DxTileView>
+    </div>
   </div>
 </template>
 
 <script>
 import DxButton from 'devextreme-vue/button';
 import {DxTileView} from 'devextreme-vue/tile-view';
+import DxToolbar, {DxItem} from 'devextreme-vue/toolbar'
+
 import notify from 'devextreme/ui/notify';
+
 import axios from 'axios';
+
 import csv from '../svg/csv.svg';
 import doc from '../svg/doc.svg';
 import docx from '../svg/docx.svg';
@@ -59,7 +85,25 @@ export default {
   name: "Home",
   data() {
     return {
-      dataSource: []
+      dataSource: [],
+      prevButtonOptions: {
+        icon: 'chevronleft',
+        onClick: () => {
+          notify('Назад');
+        }
+      },
+      nextButtonOptions: {
+        icon: 'chevronright',
+        onClick: () => {
+          notify('Вперед');
+        }
+      },
+      addButtonOptions: {
+        icon: 'upload',
+        onClick: () => {
+          notify('Загрузить файл');
+        }
+      },
     };
   },
   async created() {
@@ -117,6 +161,8 @@ export default {
     xls,
     xlsx,
     DxButton,
+    DxToolbar,
+    DxItem,
     DxTileView
   }
 }
@@ -143,7 +189,7 @@ export default {
   text-overflow: ellipsis;
 }
 
-.file-text {
+.file-name {
   text-align: center;
   padding-left: 5px;
   padding-right: 5px;
