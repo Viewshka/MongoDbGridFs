@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div id="toolbar">
       <DxToolbar>
         <DxItem
             :options="prevButtonOptions"
@@ -197,5 +197,49 @@ export default {
 
 #file-img {
   padding: 5px 5px 5px 5px;
+}
+
+#toolbar {
+  padding-right: 10px;
+  padding-left: 10px;
+  border-bottom: 1px outset rgb(255, 255, 255);
+}
+
+@import "../themes/generated/variables.base.scss";
+@import "../dx-styles.scss";
+
+.header-component {
+  flex: 0 0 auto;
+  z-index: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+  .dx-toolbar .dx-toolbar-item.menu-button > .dx-toolbar-item-content .dx-icon {
+    color: $base-accent;
+  }
+}
+
+.dx-toolbar.header-toolbar .dx-toolbar-items-container .dx-toolbar-after {
+  padding: 0 40px;
+
+  .screen-x-small & {
+    padding: 0 20px;
+  }
+}
+
+.dx-toolbar .dx-toolbar-item.dx-toolbar-button.menu-button {
+  width: $side-panel-min-width;
+  text-align: center;
+  padding: 0;
+}
+
+.header-title .DxItem-content {
+  padding: 0;
+  margin: 0;
+}
+
+.dx-theme-generic {
+  .dx-toolbar {
+    padding: 10px 0;
+  }
 }
 </style>

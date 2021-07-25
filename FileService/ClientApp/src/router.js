@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/home";
-import DefaultLayout from "./layouts/SideNavOuterToolbar"
 
 Vue.use(Router);
 
@@ -10,14 +9,7 @@ const router = new Router({
         {
             path: "/home",
             name: "home",
-            components: {
-                layout: DefaultLayout,
-                content: Home
-            }
-        },
-        {
-            path: "/",
-            redirect: "/home"
+            component: Home
         },
         {
             path: "*",
