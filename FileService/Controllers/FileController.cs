@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using DevExtreme.AspNet.Data;
+using FileService.Common;
 using FileService.Feature.File.Commands.DeleteFile;
 using FileService.Feature.File.Commands.DownloadFile;
 using FileService.Feature.File.Commands.UploadFile;
@@ -31,17 +33,13 @@ namespace FileService.Controllers
         /// <summary>
         /// Получить информацию о всех файлах
         /// </summary>
-        /// <param name="skip"></param>
-        /// <param name="take"></param>
+        /// <param name="loadOptions"></param>
         /// <returns></returns>
         [HttpGet("all")]
-        public async Task<IActionResult> GetAsync(int skip = 0, int take = 50)
+        public async Task<IActionResult> GetAsync(DataSourceLoadOptions loadOptions)
         {
-            return Ok(await _mediator.Send(new GetAllFilesInfoQuery
-            {
-                Skip = skip,
-                Take = take
-            }));
+            loadOptions.RequireTotalCount = true;
+            return Ok(DataSourceLoader.Load(await _mediator.Send(new GetAllFilesInfoQuery()), loadOptions));
         }
 
         /// <summary>

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using FileService.Options.MongoDb;
 using MediatR;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 
@@ -13,8 +12,6 @@ namespace FileService.Feature.File.Queries.GetAllFilesInfo
 {
     public class GetAllFilesInfoQuery : IRequest<IList<AllFilesInfoDto>>
     {
-        public int Skip { get; set; }
-        public int Take { get; set; }
     }
 
     public class GetAllFilesInfoQueryHandler : IRequestHandler<GetAllFilesInfoQuery, IList<AllFilesInfoDto>>
@@ -31,14 +28,12 @@ namespace FileService.Feature.File.Queries.GetAllFilesInfo
         {
             var client = new MongoClient(_options.ConnectionString);
             var database = client.GetDatabase(_options.DatabaseName);
-            
+
             var filter = Builders<GridFSFileInfo>.Filter.Empty;
             var files = database.GetCollection<GridFSFileInfo>("fs.files");
 
             return await files
                 .Find(filter)
-                .Skip(request.Skip)
-                .Limit(request.Take)
                 .Project(info => new AllFilesInfoDto
                 {
                     Id = info.Id,
@@ -51,7 +46,7 @@ namespace FileService.Feature.File.Queries.GetAllFilesInfo
         }
 
         private static string SizeToString(long length) => $"{length / 1024} кб";
-        
+
         private static string GetExtension(string filename) => filename.Split('.').Last();
     }
 }
