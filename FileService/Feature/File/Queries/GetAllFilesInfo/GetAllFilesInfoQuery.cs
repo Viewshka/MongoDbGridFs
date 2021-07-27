@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,10 @@ namespace FileService.Feature.File.Queries.GetAllFilesInfo
 
     public class GetAllFilesInfoQueryHandler : IRequestHandler<GetAllFilesInfoQuery, IList<AllFilesInfoDto>>
     {
+        private const decimal OneKiloByte = 1024M;
+        private const decimal OneMegaByte = OneKiloByte * 1024M;
+        private const decimal OneGigaByte = OneMegaByte * 1024M;
+
         private readonly MongoDbOptions _options;
 
         public GetAllFilesInfoQueryHandler(IOptions<MongoDbOptions> options)
@@ -40,12 +45,36 @@ namespace FileService.Feature.File.Queries.GetAllFilesInfo
                     FileName = info.Filename,
                     Size = SizeToString(info.Length),
                     UploadDate = info.UploadDateTime,
-                    Extension = GetExtension(info.Filename)
+                    Extension = GetExtension(info.Filename),
+                    ContentType = info.Metadata.FirstOrDefault(m => m.Name == "ContentType").Value.AsString
                 })
                 .ToListAsync(cancellationToken);
         }
 
-        private static string SizeToString(long length) => $"{length / 1024} кб";
+        private static string SizeToString(decimal size)
+        {
+            string suffix;
+            switch (size)
+            {
+                case > OneGigaByte:
+                    size /= OneGigaByte;
+                    suffix = "Гб";
+                    break;
+                case > OneMegaByte:
+                    size /= OneMegaByte;
+                    suffix = "Мб";
+                    break;
+                case > OneKiloByte:
+                    size /= OneKiloByte;
+                    suffix = "Кб";
+                    break;
+                default:
+                    suffix = "Б";
+                    break;
+            }
+
+            return $"{size:#.##} {suffix}";
+        }
 
         private static string GetExtension(string filename) => filename.Split('.').Last();
     }

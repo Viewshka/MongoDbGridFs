@@ -10,5 +10,6 @@ namespace FileService.Feature.File.Queries.GetAllFilesInfo
         public string Extension { get; set; }
         public DateTime UploadDate { get; set; }
         public string Size { get; set; }
+        public string ContentType { get; set; }
     }
 }
