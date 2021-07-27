@@ -70,7 +70,7 @@
           <a href="#"
              class="dx-link dx-icon-download dx-link-icon"
              title="Скачать файл"
-             v-on:click="download(data.data)"
+             v-on:click="downloadFile(data.data)"
           ></a>
           <a href="#"
              class="dx-link dx-icon-close dx-link-icon"
@@ -82,6 +82,7 @@
     </DxDataGrid>
 
     <UploadForm
+        v-if="uploadFormVisible"
         :visible.sync="uploadFormVisible"
     />
   </div>
@@ -155,7 +156,7 @@ export default {
             }
           });
     },
-    download(data) {
+    downloadFile(data) {
       axios({
         url: `api/file/${data.id}/download`,
         method: 'GET',
