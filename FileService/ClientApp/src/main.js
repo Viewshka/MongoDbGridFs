@@ -6,7 +6,7 @@ import axios from 'axios';
 import enums from './plugins/enums_plugin'
 
 import 'devextreme/dist/css/dx.common.css';
-import './themes/generated/theme.base.css';
+import 'devextreme/dist/css/dx.material.lime.dark.css'
 
 import moment from 'moment';
 

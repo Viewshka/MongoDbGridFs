@@ -4,12 +4,15 @@
       :width="728"
       position="center"
       title="Загрузка файлов"
+
       :show-title="true"
       :resize-enabled="true"
-      :visible="visible"
       :close-on-outside-click="true"
+      :drag-enabled="true"
+
+      :visible="visible"
       :value="files"
-      
+
       @hidden="cancel"
   >
     <div>
@@ -17,7 +20,7 @@
           upload-mode="useButtons"
           :multiple="true"
           :upload-url="uploadUrl"
-          
+
           @value-changed="valueChange"
       />
     </div>
@@ -43,15 +46,16 @@ export default {
   data() {
     return {
       uploadUrl: 'api/file/upload',
-      files:[]
+      files: []
     }
   },
   methods: {
     cancel: function () {
       this.$emit('update:visible', false);
+      this.$emit('submit');
       this.files = [];
     },
-    valueChange(value){
+    valueChange(value) {
       this.files = value;
     }
   }
