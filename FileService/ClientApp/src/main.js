@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from "./router";
-import store from './store/main';
 import axios from 'axios';
 import enums from './plugins/enums_plugin'
 
@@ -38,6 +37,5 @@ window.Vue = Vue;
 Vue.use(enums)
 new Vue({
   router,
-  store,
   render: h => h(App)
 }).$mount("#app");
