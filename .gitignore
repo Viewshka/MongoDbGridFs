@@ -440,6 +440,3 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-FileService/ClientApp/yarn.lock
-FileService/ClientApp/webpack-stats.json
